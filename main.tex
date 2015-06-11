@@ -1,0 +1,74 @@
+% EMNLP 2015 Submission
+% Format: 4 pages + references
+
+\documentclass[11pt]{article}
+\usepackage{acl2015}
+
+\bibliographystyle{acl}
+%% Make the bibliography columns flush
+\usepackage{flushend}
+
+%% TEX Gyre Termes is based on the Nimbus Roman No9 L family.
+%% A (heavily extended) replacement for times and mathptmx.
+\usepackage[T1]{fontenc}
+\usepackage{tgtermes}
+\usepackage{tgheros}             % Helvetica (sans-serif)
+\usepackage{tgcursor}            % Courier   (typewriter)
+
+%% Graphics and color
+\usepackage[table]{xcolor}
+%\usepackage{latexsym}
+\usepackage{graphicx}
+
+%% Table typesetting
+\usepackage{array}
+\usepackage{booktabs}
+\usepackage{tabularx}
+
+%% Math typesetting
+\usepackage{amsmath, amssymb}
+\usepackage{bm} %% For bold greek symbols, use either \bm{} or \boldsymbol{}
+
+%% Convenient mathematical functions
+\DeclareMathOperator*{\argmin}{arg\,min}
+\DeclareMathOperator*{\argmax}{arg\,max}
+
+% For indicating significance levels
+\newcommand{\pooo}{\textbullet\textbullet\textbullet}
+\newcommand{\poo}{\textbullet\textbullet}
+\newcommand{\po}{\textbullet}
+
+\newcommand{\url}[1]{\texttt{\small #1}}
+
+\setlength\titlebox{4.8cm}    % Expanding the titlebox
+
+\title{Variable-Length Word Encoding for Neural Translation Models}
+
+%\author{First Author \\
+%  Affiliation / Address line 1 \\
+%  Affiliation / Address line 2 \\
+%  Affiliation / Address line 3 \\
+%  {\tt email@domain} \\\And
+%  Second Author \\
+%  Affiliation / Address line 1 \\
+%  Affiliation / Address line 2 \\
+%  Affiliation / Address line 3 \\
+%  {\tt email@domain} \\}
+
+\begin{document}
+
+\maketitle
+\begin{abstract}
+\input{0-abstract}
+\end{abstract}
+
+\input{1-intro}
+\input{2-background}
+\input{3-encoding}
+\input{4-experiments}
+\input{5-conclusion}
+
+\newpage
+\bibliography{translation}
+
+\end{document}

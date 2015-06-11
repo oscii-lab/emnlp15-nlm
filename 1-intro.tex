@@ -1,0 +1,20 @@
+\section{Introduction}
+\label{sec:intro}
+
+\newcite{journals/corr/BahdanauCB14} propose a deep learning approach to
+machine translation that learns vector representations for individual words as
+well as word sequences. This approach jointly predicts a translation and a
+latent word-level alignment for a sequence of source words. The architecture of
+the predictive network poses a challenge for predicting rare words in large
+vocabularies: the task of estimating the vector representations of many words
+is both resource-constrained and information-constrained. In this paper, we
+propose to circumvent the large-vocabulary challenge by transforming the input
+and output word sequences to an alternative token sequence drawn from
+relatively small vocabularies. As a result, the exact same learning machinery
+can yield improved translations without imposing limits on the input or output
+vocabulary size.
+
+% Describe variable-length encoding with deterministic decoding, using Huffman
+% codes as an example
+
+% Highlight experimental results
