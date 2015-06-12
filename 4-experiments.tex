@@ -1,7 +1,52 @@
 \section{Experimental Results}
 \label{sec:exp}
 
-% Describe experimental set-up (add more detail than you think you need)
+We train on the English-French parallel corpora from ACL WMT '14, which contains
+348M words. To evaluate performance, we use the test set news-test-2014 also from
+WMT '14, which contains 3003 new sentences. As a comparison metric, we additionally run the system presented by
+\newcite{journals/corr/BahdanauCB14} using the same parameters. Specifically, we ensure
+that after our data transformation is applied, the resulting vocabulary also has size
+30,000 for better comparison quality. Following from the standard Huffman encoding
+priority queue algorithm, we construct the trees by doing the following. First, we use
+the formulas derived in the previous section to calculate the optimal number of
+common words, $W$. We then find the $W$ words in the text with highest frequency and
+apply the identity transformation to them. For the remaining words, we encode them
+naively using a distinct symbol whose form matches the one prescribed for each
+encoding scheme. An important direction for future work is to more effectively
+group ``similar'' words in the source and target text so that they tend to have
+encodings that share a symbol. (TODO: where does this go?)\\
 
-% Describe experimental results
+We use the RNNsearch-50 architecture from \newcite{journals/corr/BahdanauCB14} as
+our black box machine translation system. We report results for this system alone,
+as well as for each of our three encoding schemes, using the BLEU score metric for
+ease of comparison with previously reported scores. Our results after training
+for approximately 5 days are compiled in Table \ref{table:results} and Figure \ref{fig:graph}.
 
+\begin{table}
+  \centering
+  \vspace{8pt}
+  \tabcolsep=0.11cm{
+  \begin{tabular}{cccc}
+    \toprule
+      \textbf{Encoding} & \textbf{BLEU Score (5 days)}\\
+    \midrule
+      None & 0.2577\\
+    \midrule
+      Repeat-Common & 0.2704\\
+    \midrule
+      Repeat-Symbol & TODO\\
+    \midrule
+      No-Repeats & TODO\\
+    \bottomrule
+  \end{tabular}}
+  \caption{BLEU scores on detokenized test set for various encoding
+    schemes after training for 5 days.}
+  \label{table:results}
+\end{table}
+
+% \begin{figure}
+%   \centering
+%   \includegraphics[scale=0.5]{images/TODO.jpg}
+%   \caption{BLEU score after each day of training for each encoding scheme.}
+%   \label{fig:graph}
+% \end{figure}

@@ -3,18 +3,29 @@
 
 \newcite{journals/corr/BahdanauCB14} propose a deep learning approach to
 machine translation that learns vector representations for individual words as
-well as word sequences. This approach jointly predicts a translation and a
-latent word-level alignment for a sequence of source words. The architecture of
-the predictive network poses a challenge for predicting rare words in large
+well as word sequences. Their approach jointly predicts a translation and a
+latent word-level alignment for a sequence of source words. However, the architecture of
+the network poses a challenge for predicting rare words in large
 vocabularies: the task of estimating the vector representations of many words
 is both resource-constrained and information-constrained. In this paper, we
-propose to circumvent the large-vocabulary challenge by transforming the input
-and output word sequences to an alternative token sequence drawn from
-relatively small vocabularies. As a result, the exact same learning machinery
-can yield improved translations without imposing limits on the input or output
-vocabulary size.
+propose a novel approach to circumvent the large-vocabulary challenge by preprocessing the source
+and target word sequences, transforming them to an alternative token sequence drawn from
+relatively smaller vocabularies. As a result, the exact same learning machinery
+can yield improved translations without imposing limits on the source or target
+vocabulary size.\\
 
-% Describe variable-length encoding with deterministic decoding, using Huffman
-% codes as an example
+Our approach considers a family of 3 different encoding schemes, all of which
+reduce the vocabulary size of the parallel corpora used to train and test the model,
+while still maintaining deterministic decoding. The encoding schemes are largely
+motivated by the Huffman code compression algorithm. In this common compression technique,
+the frequencies of each element in the text are calculated and used to construct a tree
+which maps an element to a prefix code (no code word can be the prefix of any other code
+word in the mapping). Since the generated mappings obey this prefix property, the
+encoding is invertible.\\
 
-% Highlight experimental results
+Our method of encoding the source and target text before passing it through the
+neural machine translation system eliminates the need to replace every rare word with the
+\emph{unknown word} symbol. The desirability of removing all occurrences of this symbol is evident: translation
+quality otherwise significantly deteriorates for sentences containing many such words, or for
+languages with naturally large vocabularies. As compared to the original system, which does use
+the \emph{unknown word} symbol in its translations, our methods achieve TODO

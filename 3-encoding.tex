@@ -1,7 +1,71 @@
 \section{Variable-Length Encoding Methods}
 \label{sec:encoding}
 
-% Describe encoding schemes and the value of maintaining a large inventory
-% of one-symbol words.
+\subsection{Encoding Schemes}
+We describe three different invertible encoding schemes. Each one
+applies the identity transformation to the words with highest frequency.
+We distinguish these frequent words by referring to them
+as ``common,'' and otherwise they are ``rare.''\\
 
-% Derivation of symbol counts under three different encoding schemes.
+The first encoding scheme, named
+``Repeat-Common,'' encodes every rare word as two words: a special symbol
+of the form $sXXXX$, where the $X$ are digits from 0 to 9, followed by a
+common word. For example, consider encoding the sentence ``cat cat eat dog dog play''
+with a common word size of 2. The following diagram shows a possible encoding
+tree under the Repeat-Common scheme:
+
+\Tree[. [cat ]
+        [dog ]
+        [.s24 [dog ] [cat ]]]
+
+Thus, the sentence could be encoded as ``cat cat s24 dog dog dog s24 cat.''\\
+
+The second encoding scheme, ``Repeat-Symbol,'' encodes rare words in the
+form ``sXXXX sXXXX,'' where as before the $X$ are digits from 0 to 9. Under
+this encoding scheme, here is a possible tree for the vocabulary in the
+example sentence:
+
+\Tree[. [cat ]
+        [dog ]
+        [.s24 [s57 ] [s87 ]]]
+
+Thus, the sentence could be encoded as ``cat cat s24 s57 dog dog s24 s87.''\\
+
+Our final encoding scheme, ``No-Repeats,'' encodes rare words in the
+form ``sXXXX tXXXX,'' where again the $X$ are digits from 0 to 9. We note that
+at the expense of increasing the number of new symbols we introduce into the
+vocabulary, the translation system has a better opportunity to learn the
+rare word encodings. Here is a possible tree corresponding to the example
+sentence:
+
+\Tree[. [cat ]
+        [dog ]
+        [.s24 [t57 ] [t87 ]]]
+
+Thus, the sentence could be encoded as ``cat cat s24 t57 dog dog s24 t87.''
+
+\subsection{Symbol Counts}
+To maximize performance, it is critical to set the number of common words (which
+transform to themselves) as high as possible while satisfying the desired total vocabulary size,
+which also counts all the introduced extra symbols. In this section, we algebraically derive
+this optimal number of common words for each encoding scheme. We define the following:\\\\
+$W$: Number of common words -- first-level terminal nodes in the encoding tree.\\
+$V$: Size of the original vocabulary.\\
+$K$: Size of the transformed vocabulary (number of words in the encoded text).\\
+
+We are interested in solving for $W$.\\
+
+\textbf{Repeat-Common}\\
+TODO\\
+
+\textbf{Repeat-Symbol}\\
+Out of the $V - W$ rare words, we would like to pack them into a complete tree so that
+they may be encoded using our remaining $K - W$ symbols. Thus, we have $\sqrt{V - W} = K - W$.\\
+
+\textbf{No-Repeats}\\
+We introduce more variables: $S$, the number of non-terminal nodes in the encoding tree (symbols
+of the form sXXXX) and $T$, the number of second-level terminal nodes (symbols of the form tXXXX).
+As in the Repeat-Symbol derivation, we desire to pack $V - W$ into a complete tree where we
+may use $S$ symbols: $\sqrt{V - W} = S$. To maximize $W$, we set $S = T$, so that the number of sXXXX symbols and tXXXX
+symbols are the same. Because $S + T + W = K$, we have that $2S + W = K$. Simplifying, we obtain
+$\sqrt{V - W} = \dfrac{K - W}{2}$.

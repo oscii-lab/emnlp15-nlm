@@ -1,8 +1,54 @@
 \section{Background}
 \label{sec:background}
 
-% Describe neural MT approach
+\subsection{Neural Machine Translation}
+The conventional architecture for neural machine translation, as proposed by \newcite{journals/corr/BahdanauCB14} (TODO: wrong citation),
+consists of an encoder and a decoder, both recurrent neural networks. The encoder receives
+a source text sentence $\mathbf{x}$ and outputs a fixed-length vector of hidden states:
+\begin{equation}
+h_{t} = f(x_{t}, h_{t-1})
+\end{equation},
+where $f$ is any non-linear activation function. The decoder then converts these hidden state vectors to
+target symbols $\mathbf{y}$ according to
+\begin{equation}
+P(y_{t} | y_{t-1}, ..., y_{1}, \mathbf{x}) = g(h_{t}, y_{t-1}, \mathbf{c})
+\end{equation},
+where $\mathbf{c}$ is a \emph{summary} of the entire input sequence and $g$ is another activation function.
+Naturally, the encoder and decoder parameters are jointly optimized to maximize the log likelihood:
+\begin{equation}
+\theta^{*} = argmax_{\theta} \sum_{n=1}^{N}\log p(y_{n} | x_{n}, \theta)
+\end{equation}
 
-% Describe alternative proposals to scaling vocabulary
+In \newcite{journals/corr/BahdanauCB14}, the authors propose a system to relieve the encoder of its need
+to convert each source sentence into a fixed-length hidden state vector. Toward this end, their approach builds an ``attention mechanism''
+into the decoder, which is trained to determine which portions of the source sentence to focus on. The encoder
+is built as a bidirectional recurrent neural network, where the hidden state annotations $h_{t}$ for each source text word
+are the result of concatenating forward hidden states $\overrightarrow{h_{t}} = f(x_{t}, \overrightarrow{h_{t-1}})$ and backward hidden states
+$\overleftarrow{h_{t}} = f(x_{t}, \overleftarrow{h_{t+1}})$. The decoder computes $\mathbf{c}$, the summarizing context vector,
+as a convex combination of the $h_{t}$, with coefficients equal to $a(h_{t}, z_{t-1})$ scaled down using a softmax computation, where $a$ is a
+jointly trained feedforward neural network with one hidden layer. We may thus write
+\begin{equation}
+P(y_{t} | y_{t-1}, ..., y_{1}, \mathbf{x}) = \dfrac{exp\{\theta_{t}^{T} \phi(y_{t-1}, z_{t}, c_{t})\}}{\displaystyle\sum_{s:y_{s} \in V} exp\{\theta_{s}^{T} \phi(y_{t-1}, z_{t}, c_{t})\}}
+\end{equation}
+for the probability of the next target vocabulary word in the translation.\\
 
+As detailed by \newcite{journals/corr/BahdanauCB14} (TODO: wrong citation), the dependence of the complexity on vocabulary
+size stems from the computation of the normalization factor in equation (4). This leads
+to significant temporal and memory requirements that scale with increased vocabulary size. Our approach uses the described neural machine
+translation system as a black box while transforming the text to have a fixed vocabulary size.
 
+\subsection{Related Work}
+There has been much recent work in solving the issue of large vocabulary size with neural machine translation.
+Typically, these translation systems only consider the top 30K to 100K words in the text, replacing the rare words
+with a filler symbol. \newcite{journals/corr/BahdanauCB14} (TODO: addressing rare word problem) describe an approach
+that, similar to ours, treats the translation system as a black box. They eliminate unknown symbols by training the
+system to recognize from where in the source text each unknown word in the target text came, so that the unknown word
+can be replaced by a dictionary lookup of the corresponding source text word in a postprocessing phase. In contrast,
+our method does not rely on having a complete dictionary, and instead transforms the data to allow the system itself to
+learn translations for even the rare words.\\
+
+Some approaches have altered the model itself to circumvent the expensive normalization computation, rather than
+applying preprocessing and postprocessing on the text. \newcite{journals/corr/BahdanauCB14} (TODO: learning word embeddings)
+develop an importance sampling strategy for estimating the exponent term in equation (3), thus leading to
+an approximation of the softmax computation. \newcite{journals/corr/BahdanauCB14} (TODO: learning word embeddings)
+present a technique for approximation of target word probability using noise-contrastive estimation.
