@@ -2,16 +2,17 @@
 \label{sec:exp}
 
 We train on the English-French parallel corpora from ACL WMT '14, which contains
-348M words. To evaluate performance, we use the test set news-test-2014 also from
+348M words. To evaluate performance, we use the test set news-test-2014, also from
 WMT '14, which contains 3003 new sentences. As a comparison metric, we additionally run the system presented by
-\newcite{journals/corr/BahdanauCB14} using the same parameters. Specifically, we ensure
+\newcite{journals/corr/BahdanauCB14} using the same parameters and data. We ensure
 that after our data transformation is applied, the resulting vocabulary also has size
-30,000 for better comparison quality. Following from the standard Huffman encoding
-priority queue algorithm, we construct the trees by doing the following. First, we use
+30,000, matching the number used in their experiments. Taking inspiration from the standard Huffman encoding
+priority queue algorithm, we construct the trees by the following method. First, we use
 the formulas derived in the previous section to calculate the optimal number of
-common words, $W$. We then find the $W$ words in the text with highest frequency and
+common words $W$ for each encoding scheme, using $V$ to be the vocabulary size of the original text and $K = 30000$.
+We then find the $W$ words in the text with highest frequency and
 apply the identity transformation to them. For the remaining words, we encode them
-naively using a distinct symbol whose form matches the one prescribed for each
+using a distinct symbol whose form matches the one prescribed for each
 encoding scheme.\\
 
 We use the RNNsearch-50 architecture from \newcite{journals/corr/BahdanauCB14} as
@@ -20,7 +21,7 @@ as well as for each of our three encoding schemes, using the BLEU score metric f
 ease of comparison with previously reported scores. Our results after training
 for approximately 5 days are compiled in Table \ref{table:results} and Figure \ref{fig:graph}.\\
 
-TODO: analyze results
+TODO: analyze results\\
 
 \begin{table}
   \centering
