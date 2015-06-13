@@ -12,9 +12,7 @@ the formulas derived in the previous section to calculate the optimal number of
 common words, $W$. We then find the $W$ words in the text with highest frequency and
 apply the identity transformation to them. For the remaining words, we encode them
 naively using a distinct symbol whose form matches the one prescribed for each
-encoding scheme. An important direction for future work is to more effectively
-group ``similar'' words in the source and target text so that they tend to have
-encodings that share a symbol. (TODO: where does this go?)\\
+encoding scheme.\\
 
 We use the RNNsearch-50 architecture from \newcite{journals/corr/BahdanauCB14} as
 our black box machine translation system. We report results for this system alone,
@@ -46,9 +44,9 @@ TODO: analyze results
   \label{table:results}
 \end{table}
 
-% \begin{figure}
-%   \centering
-%   \includegraphics[scale=0.5]{images/TODO.jpg}
-%   \caption{BLEU score after each day of training for each encoding scheme.}
-%   \label{fig:graph}
-% \end{figure}
+\begin{figure}
+  \centering
+  \includegraphics[scale=0.6]{images/graph.png}
+  \caption{BLEU score after each day of training for each encoding scheme.}
+  \label{fig:graph}
+\end{figure}
