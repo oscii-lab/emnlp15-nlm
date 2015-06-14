@@ -8,28 +8,29 @@ We distinguish these highest frequency words by referring to them
 as ``common,'' and we call the other words ``rare.''\\
 
 The first encoding scheme, named
-``Repeat-Common,'' encodes every rare word as two words: a special symbol
-of the form ``sXXXX,'' where the X are digits from 0 to 9, followed by a
-common word. For example, consider encoding the sentence ``cat cat eat dog dog play''
+``Repeat-All,'' encodes every rare word as two words: a special symbol
+of the form ``sXXXX,'' where the X are digits from 0 to 9, followed by any
+already-occurring symbol (either a common word or a symbol ``sXXXX'').
+ For example, suppose our entire corpus is the sentence ``to be or not to be''
 with a common word size of 2. The following diagram shows a possible encoding
-tree under the Repeat-Common scheme:
+tree under the Repeat-All scheme (TODO: add labels to branches and follow style guidelines):
 
-\Tree[. [cat ]
-        [dog ]
-        [.s24 [dog ] [cat ]]]
+\Tree[. [to ]
+        [be ]
+        [.s24 [be ] [s27 ]]]
 
-Then, the sentence would be encoded as ``cat cat s24 dog dog dog s24 cat.''\\
+Then, the sentence would be encoded as ``to be s24 be s24 s27 to be.''\\
 
 The second encoding scheme, ``Repeat-Symbol,'' encodes rare words in the
 form ``sXXXX sXXXX,'' where as before the X are digits from 0 to 9. Under
 this encoding scheme, here is a possible tree for the vocabulary in the
 example sentence:
 
-\Tree[. [cat ]
-        [dog ]
+\Tree[. [to ]
+        [be ]
         [.s24 [s57 ] [s87 ]]]
 
-Then, the sentence would be encoded as ``cat cat s24 s57 dog dog s24 s87.''\\
+Then, the sentence would be encoded as ``to be s24 s57 s24 s87 to be.''\\
 
 Our final encoding scheme, ``No-Repeats,'' encodes rare words in the
 form ``sXXXX tXXXX,'' where again the X are digits from 0 to 9. We note that
@@ -38,11 +39,11 @@ vocabulary, the translation system has a better opportunity to learn the
 rare word encodings. Here is a possible tree corresponding to the example
 sentence:
 
-\Tree[. [cat ]
-        [dog ]
+\Tree[. [to ]
+        [be ]
         [.s24 [t57 ] [t87 ]]]
 
-Then, the sentence would be encoded as ``cat cat s24 t57 dog dog s24 t87.''
+Then, the sentence would be encoded as ``to be s24 t57 s24 t87 to be.''
 
 \subsection{Symbol Counts}
 To maximize performance, it is critical to set the number of common words (which
@@ -55,8 +56,12 @@ $K$: Size of the transformed vocabulary (number of words in the encoded text).\\
 
 We are interested in solving for $W$.\\
 
-\textbf{Repeat-Common}\\
-TODO\\
+\textbf{Repeat-All}\\
+We would like to encode the $V - W$ rare words, using only $K - W$ new symbols. To do so,
+for each new symbol (non-terminal node in our encoding tree), we have all $K$ symbols under
+it in that branch. Therefore, we find $V - W = (K - W)K$.\\
+
+TODO: explain why 2 level tree.\\
 
 \textbf{Repeat-Symbol}\\
 Out of the $V - W$ rare words, we would like to pack them into a complete tree so that

@@ -49,7 +49,12 @@ learn translations for even the rare words.\\
 
 Some approaches have altered the model itself to circumvent the expensive normalization computation, rather than
 applying preprocessing and postprocessing on the text. \newcite{journals/corr/JeanCMB14}
-develop an importance sampling strategy for estimating the exponent term in equation (3), thus leading to
+develop an importance sampling strategy for estimating the exponent term in equation (4), thus leading to
 an approximation of the softmax computation. \newcite{NIPS2013_5165}
 present a technique for approximation of target word probability using noise-contrastive estimation. Our method can
 be applied in conjunction with these techniques.\\
+
+\newcite{5947611} develop a modification to their recurrent neural network architecture for language models. They
+factorize the output layer by introducing a hidden layer that assigns a \emph{class} to each word
+based on frequency, so that the output layer only evaluates words of the class predicted by the hidden layer.
+Although the application is different, our method also involves frequency-based grouping of symbols.\\
