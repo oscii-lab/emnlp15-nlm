@@ -1,8 +1,30 @@
 \section{Variable-Length Encoding Methods}
 \label{sec:encoding}
 
+\begin{figure}
+\includegraphics{examples.pdf}
+\caption{Our three encoding schemes are applied to a two sentence toy corpus
+for which each word type appears one or two times, and the total vocabulary
+size $V$ is 7. An optimal encoding tree under each scheme is shown for an
+encoded vocabulary size $W$ of 6. As stricter constraints are imposed on the
+encoding, the encoded corpus length increases and the number of elements of $V$
+that can be represented using a single symbol decreases.
+\label{fig:examples}
+\end{figure}
+
+We consider three different encoding schemes that are based on Huffman codes.
+The encoding for a toy corpus under each scheme is depicted in
+Figure~\ref{fig:examples}. While a Huffman code achieves the shortest possible
+encoded length using a fixed vocabulary size $W$, symbols are often shared
+between both common and rare words. Therefore, a Huffman code may not be
+optimal for the task of machine translation using a neural network model. The
+variants we consider prevent various forms of symbol sharing.
 
 \subsection{Encoding Schemes}
+
+The first scheme is a standard Huffman code. To construct the encoded
+vocabulary $W$, we use
+
 We describe three different invertible encoding schemes. Each one
 applies the identity transformation to the words with highest frequency.
 We distinguish these highest frequency words by referring to them
