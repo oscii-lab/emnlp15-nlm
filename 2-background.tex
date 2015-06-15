@@ -33,7 +33,7 @@ Depending on the approach to neural translation, $c$ can take multiple forms.
 in the decoder, which is trained to determine on which portions of the source
 sentence to focus. The decoder computes $c_{i}$, the summarizing context
 vector, as a convex combination of the $h_{j}$. The coefficients of this
-combination are proportional to an alignment model prediction $\exp a(h_j,
+combination are proportional (softmax) to an alignment model prediction $\exp a(h_j,
 s_i)$, where $a$ is a non-linear function.
 
 The speed of prediction scales with the output vocabulary size, due to the
