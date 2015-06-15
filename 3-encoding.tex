@@ -27,6 +27,9 @@ vocabulary $W$, we use
 
 We describe three different invertible encoding schemes. Each one
 applies the identity transformation to the words with highest frequency.
+It is beneficial to use different encoding schemes because changing the number of
+new symbols introduced provides insight into the interaction between number of words
+that encode to themselves and the system's ability to learn translations of the encoded words.
 We distinguish these highest frequency words by referring to them
 as ``common,'' and we call the other words ``rare.''\\
 
@@ -82,13 +85,12 @@ We are interested in solving for $W$.\\
 \textbf{Repeat-All}\\
 We would like to encode the $V - W$ rare words, using only $K - W$ new symbols. To do so,
 for each new symbol (non-terminal node in our encoding tree), we have all $K$ symbols under
-it in that branch. Therefore, we find $V - W = (K - W)K$.\\
-
+it in that branch. Therefore, we find $$\max_{W} V - W \leq (K - W)K$$
 TODO: explain why 2 level tree.\\
 
 \textbf{Repeat-Symbol}\\
 Out of the $V - W$ rare words, we would like to pack them into a complete tree so that
-they may be encoded using our remaining $K - W$ symbols. Thus, we have $\sqrt{V - W} = K - W$.\\
+they may be encoded using our remaining $K - W$ symbols. Thus, we have $$\max_{W} \sqrt{V - W} \leq K - W$$
 
 \textbf{No-Repeats}\\
 We introduce more variables: $S$, the number of non-terminal nodes in the encoding tree (symbols
@@ -96,4 +98,4 @@ of the form sXXXX) and $T$, the number of second-level terminal nodes (symbols o
 As in the Repeat-Symbol derivation, we desire to pack $V - W$ into a complete tree where we
 may use $S$ symbols: $\sqrt{V - W} = S$. To maximize $W$, we set $S = T$, so that the number of sXXXX symbols and tXXXX
 symbols are the same. Because $S + T + W = K$, we have that $2S + W = K$. Simplifying, we obtain
-$\sqrt{V - W} = \dfrac{K - W}{2}$.\\
+$$\max_{W} \sqrt{V - W} \leq \dfrac{K - W}{2}$$
