@@ -34,7 +34,7 @@ for the probability of the next target vocabulary word in the translation.\\
 
 As detailed by \newcite{journals/corr/JeanCMB14}, the dependence of the complexity on vocabulary
 size stems from the computation of the normalization factor in equation (4). This leads
-to significant temporal and memory requirements that scale with increased vocabulary size: storage space and 
+to significant temporal and memory requirements that scale with increased vocabulary size: storage space and
 learning time are both increased. Our approach thus uses this neural machine
 translation system as a black box while transforming the text to have a fixed vocabulary size.
 
@@ -74,20 +74,22 @@ thus avoiding computation of the summation term over the entire vocabulary.
 \subsection{Huffman Codes}
 
 An encoding can be used to represent a sequence of tokens from a large
-vocabulary $V$ using a small vocabulary $W$. In the case of translation, let
-$V$ be the original corpus vocabulary, which can number in the millions of word
-types in a typical corpus. Let $W$ be the limited vocabulary size of a neural
-translation model, which is typically set to a much smaller number such as
-30,000.\\
+vocabulary $\mathcal{V}$ using a small vocabulary $\mathcal{W}$. In the case of
+translation, let $\mathcal{V}$ be the original corpus vocabulary, which can
+number in the millions of word types in a typical corpus. Let $\mathcal{W}$ be
+the limited vocabulary size of a neural translation model, which is typically
+set to a much smaller number such as 30,000.\\
 
-A deterministically invertible, variable-length encoding maps each $v \in V$ to a
-sequence $w \in W+$ such that no other $v' \in V$ is mapped to a prefix of $w$.
-Encoding simply replaces each element of $V$ with its encoding, and decoding
-is unambiguous because of this prefix restriction. An encoding can be represented
-as a tree in which each leaf corresponds to an element of $V$, each node contains
-a symbol from $W$, and the encoding of any leaf is its path from the root.\\
+A deterministically invertible, variable-length encoding maps each
+$v\in\mathcal{V}$ to a sequence $w \in \mathcal{W}+$ such that no other
+$v'\in\mathcal{V}$ is mapped to a prefix of $w$. Encoding simply replaces each
+element of $V$ with its encoding, and decoding is unambiguous because of this
+prefix restriction. An encoding can be represented as a tree in which each leaf
+corresponds to an element of $V$, each node contains a symbol from
+$\mathcal{W}$, and the encoding of any leaf is its path from the root.\\
 
-A Huffman code is an optimal encoding that uses as few symbols from $W$ as
-possible to encode an original sequence of symbols from $V$. Although binary
-codes are typical, $W$ can have any size. An optimal encoding can be found
-using a greedy algorithm \cite{huffman}.\\
+A Huffman code is an optimal encoding that uses as few symbols from
+$\mathcal{W}$ as possible to encode an original sequence of symbols from
+$\mathcal{V}$. Although binary codes are typical, $\mathcal{W}$ can have any
+size. An optimal encoding can be found using a greedy algorithm
+\cite{huffman}.\\
