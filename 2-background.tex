@@ -54,7 +54,33 @@ an approximation of the softmax computation. \newcite{NIPS2013_5165}
 present a technique for approximation of target word probability using noise-contrastive estimation. Our method can
 be applied in conjunction with these techniques.\\
 
-\newcite{5947611} develop a modification to their recurrent neural network architecture for language models. They
-factorize the output layer by introducing a hidden layer that assigns a \emph{class} to each word
-based on frequency, so that the output layer only evaluates words of the class predicted by the hidden layer.
-Although the application is different, our method also involves frequency-based grouping of symbols.\\
+Sequential or hierarchical encodings of large vocabularies have played an
+improtant role in recurrent neural network language models, primarily to
+address the inference time issue of large vocabularies. \newcite{5947611}
+describe an architecture in which output word types are grouped into classes by
+frequency, and the network first predicts a class and then a word in that
+class. \newcite{journals/corr/abs-1301-3781} describe an encoding of the output
+vocabulary as a binary tree. To our knowledge, hierarchical encodings have not
+been applied to input vocabulary encoding for translation.
+% TODO Cite some more language model papers [sent Rohan an email]
+
+\subsection{Huffman Codes}
+
+An encoding can be used to represent a sequence of tokens from a large
+vocabulary $V$ using a small vocabulary $W$. In the case of translation, let
+$V$ be the original corpus vocabulary, which can number in the millions of word
+types in a typical corpus. Let $W$ be the limited vocabulary size of a neural
+translation model, which is typically set to a much smaller number such as
+30,000.
+
+A deterministically invertible, variable-length encoding maps each $v\inV$ to a
+sequence $w \in W+$ such that no other $v'\inV$ is mapped to a prefix of $w$.
+Encoding simply replaces each element of $V$ with its encoding, and decoding
+is unambiguous because of this prefix restriction. An encoding can be represented as a tree in which each leaf corresponds to an element of $V$, each node contains a symbol from $W$, and the encoding of any leaf is its path from the root.
+
+A Huffman code is an optimal encoding that uses as few symbols from $W$ as
+possible to encode an original sequence of symbols from $V$. Although binary
+codes are typical, $W$ can have any size. An optimal encoding can be found
+using a greedy algorithm \cite{huffman}.
+
+
