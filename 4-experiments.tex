@@ -17,7 +17,7 @@ encoding scheme.\\
 
 We use the RNNsearch-50 architecture from \newcite{journals/corr/BahdanauCB14} as
 our black box machine translation system. We report results for this system alone,
-as well as for each of our three encoding schemes, using the BLEU score metric for
+as well as for each of our three encoding schemes, using the BLEU score metric (\newcite{bleu}) for
 ease of comparison with previously reported scores. Our results after training
 for approximately 5 days are compiled in Table \ref{table:results} and Figure \ref{fig:graph}.\\
 
@@ -29,15 +29,15 @@ TODO: analyze results\\
   \tabcolsep=0.11cm{
   \begin{tabular}{cccc}
     \toprule
-      \textbf{Encoding} & \textbf{BLEU Score (5 days)}\\
+      \textbf{Encoding} & \textbf{BLEU, 5 days} & \textbf{\# Common Words}\\
     \midrule
-      None & 0.2577\\
+      None & 0.2577 & 30000\\
     \midrule
-      Repeat-All & 0.2704\\
+      Repeat-All & 0.2704 & 29940\\
     \midrule
-      Repeat-Symbol & TODO\\
+      Repeat-Symbol & TODO & 28860\\
     \midrule
-      No-Repeats & TODO\\
+      No-Repeats & TODO & 27320\\
     \bottomrule
   \end{tabular}}
   \caption{BLEU scores on detokenized test set for various encoding

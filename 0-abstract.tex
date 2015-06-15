@@ -3,7 +3,9 @@ architectures do not scale naturally to large vocabulary sizes because each
 word in the vocabulary must be embedded into a vector space. We propose and compare
 three variable-length encoding schemes for a large-vocabulary machine
 translation task. Common words are unaffected by our encoding, but rare
-words are encoded using a sequence of two pseudo-words. In comparison to
+words are encoded using a sequence of two pseudo-words. Although much recent work
+has been devoted to addressing the large vocabulary issue, our method is simple and effective:
+it requires no complete dictionaries, learning, increased training time, or new parameters. In comparison to
 replacing rare words with a special \emph{unknown word} symbol, our best
 variable-length encoding strategy improves English-French translation
 performance by X.X\% BLEU. TODO

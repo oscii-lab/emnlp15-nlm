@@ -7,10 +7,12 @@ well as word sequences. Their approach jointly predicts a translation and a
 latent word-level alignment for a sequence of source words. However, the architecture of
 the network poses a challenge for predicting rare words in large
 vocabularies: the task of estimating the vector representations of many words
-is both resource-constrained and information-constrained. In this paper, we
+is both resource-constrained and information-constrained: storage space and model learning time
+are increased. In this paper, we
 propose a novel approach to circumvent the large-vocabulary challenge by preprocessing the source
 and target word sequences, transforming them to an alternative token sequence drawn from
-relatively smaller vocabularies. As a result, the exact same learning machinery
+relatively smaller vocabularies. Words of high frequency encode to themselves, and rare
+words encode to a sequence of two pseudo-words. As a result, the exact same learning machinery
 can yield improved translations without imposing limits on the source or target
 vocabulary size.\\
 
@@ -27,5 +29,8 @@ Our method of encoding the source and target text before passing it through the
 neural machine translation system eliminates the need to replace every rare word with the
 \emph{unknown word} symbol. The desirability of removing all occurrences of this symbol is evident: translation
 quality otherwise significantly deteriorates for sentences containing many such words, or for
-languages with naturally large vocabularies. As compared to the original system, which does use
-the \emph{unknown word} symbol in its translations, our methods achieve TODO\\
+languages with naturally large vocabularies. Our approach additionally benefits from simplicity over
+other methods developed to address the same issue. It does not introduce
+new parameters into the model or change what the system learns, nor does it require an outside complete dictionary.
+ As compared to the original system, which does use the \emph{unknown word} symbol in
+its translations, our methods achieve TODO\\
