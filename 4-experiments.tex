@@ -19,9 +19,12 @@ We use the RNNsearch-50 architecture from \newcite{journals/corr/BahdanauCB14} a
 our black box machine translation system. We report results for this system alone,
 as well as for each of our three encoding schemes, using the BLEU score metric (\newcite{bleu}) for
 ease of comparison with previously reported scores. Our results after training
-for approximately 5 days are compiled in Table \ref{table:results} and Figure \ref{fig:graph}.
+for approximately 5 days are compiled in Table \ref{table:results} and \ref{table:precs}.
 
-TODO: analyze results
+Our results indicate that the scheme which keeps the highest number of common words, Repeat-All,
+performs best. The precision values reveal that the common word translation accuracy does not change significantly
+among strategies, but the system learns translations for the rare words best when they are encoded
+using Repeat-All.
 
 \begin{table}
   \centering
@@ -45,9 +48,24 @@ TODO: analyze results
   \label{table:results}
 \end{table}
 
-\begin{figure}
+\begin{table}
   \centering
-  \includegraphics[scale=0.45]{images/graph.png}
-  \caption{BLEU score after each day of training for each encoding scheme.}
-  \label{fig:graph}
-\end{figure}
+  \vspace{8pt}
+  \tabcolsep=0.11cm{
+  \begin{tabular}{cccc}
+    \toprule
+      \textbf{Encoding} & \textbf{CW Precision} & \textbf{RW Precision}\\
+    \midrule
+      None & 0.895 & N/A\\
+    \midrule
+      Repeat-All & 0.970 & 0.332\\
+    \midrule
+      Repeat-Symbol & 0.967 & 0.216\\
+    \midrule
+      No-Repeats & 0.970 & 0.210\\
+    \bottomrule
+  \end{tabular}}
+  \caption{Precision on common words (CW) and rare words (RW) in the test set
+    for each encoding strategy.}
+  \label{table:precs}
+\end{table}
