@@ -62,8 +62,14 @@ describe an architecture in which output word types are grouped into classes by
 frequency, and the network first predicts a class and then a word in that
 class. \newcite{journals/corr/abs-1301-3781} describe an encoding of the output
 vocabulary as a binary tree. To our knowledge, hierarchical encodings have not
-been applied to input vocabulary encoding for translation.
-% TODO Cite some more language model papers [sent Rohan an email]
+been applied to input vocabulary encoding for translation.\\
+
+Other methods have been also developed to work around large-vocabulary issues in
+language modeling. \newcite{Morin05hierarchicalprobabilistic}, \newcite{NIPS2008_3583},
+and \newcite{strategies} develop hierarchical versions of
+the softmax computation; \newcite{Huang:2012:IWR:2390524.2390645}
+and \newcite{Collobert:2008:UAN:1390156.1390177} remove the need for normalization,
+thus avoiding computation of the summation term over the entire vocabulary.
 
 \subsection{Huffman Codes}
 
