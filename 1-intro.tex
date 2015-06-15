@@ -14,7 +14,7 @@ and target word sequences, transforming them to an alternative token sequence dr
 relatively smaller vocabularies. Words of high frequency encode to themselves, and rare
 words encode to a sequence of two pseudo-words. As a result, the exact same learning machinery
 can yield improved translations without imposing limits on the source or target
-vocabulary size.\\
+vocabulary size.
 
 Our approach considers a family of 3 different encoding schemes, all of which
 reduce the vocabulary size of the parallel corpora used to train and test the model,
@@ -23,7 +23,7 @@ motivated by the Huffman code compression algorithm. In this common compression 
 the frequencies of each element in the text are calculated and used to construct a tree
 which maps an element to a prefix code (no code word can be the prefix of any other code
 word in the mapping). Since the generated mappings obey this prefix property, the
-encoding is invertible.\\
+encoding is invertible.
 
 Our method of encoding the source and target text before passing it through the
 neural machine translation system eliminates the need to replace every rare word with the
@@ -34,4 +34,4 @@ other methods developed to address the same issue. It does not introduce
 new parameters into the model or change what the system learns, nor does it require an outside complete dictionary.
  As compared to the original system, which does use the \emph{unknown word} symbol in
 its translations, our methods achieve an improvement in English-French translation of up to 4.93\% BLEU, or about 1.3 BLEU points,
-and can easily be used in conjunction with other techniques.\\
+and can easily be used in conjunction with other techniques.

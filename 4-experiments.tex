@@ -13,15 +13,15 @@ common words $W$ for each encoding scheme, using $V$ to be the vocabulary size o
 We then find the $W$ words in the text with highest frequency and
 apply the identity transformation to them. For the remaining words, we encode them
 using a distinct symbol whose form matches the one prescribed for each
-encoding scheme.\\
+encoding scheme.
 
 We use the RNNsearch-50 architecture from \newcite{journals/corr/BahdanauCB14} as
 our black box machine translation system. We report results for this system alone,
 as well as for each of our three encoding schemes, using the BLEU score metric (\newcite{bleu}) for
 ease of comparison with previously reported scores. Our results after training
-for approximately 5 days are compiled in Table \ref{table:results} and Figure \ref{fig:graph}.\\
+for approximately 5 days are compiled in Table \ref{table:results} and Figure \ref{fig:graph}.
 
-TODO: analyze results\\
+TODO: analyze results
 
 \begin{table}
   \centering
