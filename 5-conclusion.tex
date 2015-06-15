@@ -3,14 +3,12 @@
 
 Recurrent neural network-based deep learning approaches
 to machine translation have performed well on a limited vocabulary
-size. In this paper, we developed a novel approach for compressing
-the source and target text based on Huffman coding schemes. By doing
-so, we eliminate the use of the \emph{unknown word} symbol,
-and we allow the system to naturally learn translations corresponding
-to the rare words in the text. An important direction for future work is to more effectively
-group ``similar'' words in the source and target text so that they tend to have
-encodings that share a symbol. Developing such heuristics for choosing which rare words should have common symbols
-is a logical continuation of our current work. We evaluated performance on the English-French
+size. We developed a novel approach for compressing
+the source and target text based on Huffman coding schemes,
+eliminating the use of the \emph{unknown word} symbol.
+An important continuation of our work would be to develop heuristics for effectively
+grouping ``similar'' words in the source and target text, so that they tend to have
+encodings that share a symbol. We evaluated performance on the English-French
 parallel corpora from ACL WMT '14 and compared it with that of the architecture
 proposed by \newcite{journals/corr/BahdanauCB14}, using the BLEU score metric.
 We found that our system improved the BLEU score by up to 6.52\% (1.7 points); its simplicity

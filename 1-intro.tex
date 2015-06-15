@@ -16,18 +16,12 @@ words encode to a sequence of two pseudo-words. As a result, the exact same lear
 can yield improved translations without imposing limits on the source or target
 vocabulary size.
 
-Our approach considers a family of 3 different encoding schemes, all of which
-reduce the vocabulary size of the parallel corpora used to train and test the model,
-while still maintaining deterministic decoding. The encoding schemes are largely
-motivated by the Huffman code compression algorithm (Section 2.3).
-
-Our method of encoding the source and target text before passing it through the
-neural machine translation system eliminates the need to replace every rare word with the
+Our approach considers a family of 3 different encoding schemes, eliminating the need to replace every rare word with the
 \emph{unknown word} symbol. The desirability of removing all occurrences of this symbol is evident: translation
 quality otherwise significantly deteriorates for sentences containing many such words, or for
 languages with naturally large vocabularies. Our approach additionally benefits from simplicity over
 other methods developed to address the same issue. It does not introduce
-new parameters into the model or change what the system learns, nor does it require an outside complete dictionary.
+new parameters into the model or change what the system learns, nor does it require access to a complete dictionary.
  As compared to the original system, which does use the \emph{unknown word} symbol in
 its translations, our methods achieve an improvement in English-French translation of up to 6.52\% BLEU, or about 1.7 BLEU points,
 and can easily be used in conjunction with other techniques.

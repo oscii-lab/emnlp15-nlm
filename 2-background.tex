@@ -2,8 +2,8 @@
 \label{sec:background}
 
 \subsection{Neural Machine Translation}
-One recent approach to neural machine translation predicts both a translation
-and its alignment to the source sentence \newcite{journals/corr/ChoMGBSB14}.
+One recent approach to neural machine translation by \newcite{journals/corr/ChoMGBSB14} predicts both a translation
+and its alignment to the source sentence.
 
 The architecture consists of an encoder and a decoder. The encoder receives a
 source text sentence $\mathbf{x}$ and encodes each prefix using a recurrent
@@ -29,7 +29,7 @@ parameters are jointly optimized to maximize the log likelihood of a training
 corpus.
 
 Depending on the approach to neural translation, $c$ can take multiple forms.
-\newcite{journals/corr/ChoMGBSB14} proposes integrating an attention mechanism
+\newcite{journals/corr/BahdanauCB14} propose integrating an attention mechanism
 in the decoder, which is trained to determine on which portions of the source
 sentence to focus. The decoder computes $c_{i}$, the summarizing context
 vector, as a convex combination of the $h_{j}$. The coefficients of this
@@ -49,21 +49,20 @@ There has been much recent work in improving translation quality with a large vo
 that, similar to ours, treats the translation system as a black box. They eliminate unknown symbols by training the
 system to recognize from where in the source text each unknown word in the target text came, so that in a postprocessing
  phase, the unknown word can be replaced by a dictionary lookup of the corresponding source text word. In contrast,
-our method does not rely on having a complete dictionary, and instead transforms the data to allow the system itself to
+our method does not rely on access to a complete dictionary, and instead transforms the data to allow the system itself to
 learn translations for even the rare words.
 
 Some approaches have altered the model itself to circumvent the expensive normalization computation, rather than
 applying preprocessing and postprocessing on the text. \newcite{journals/corr/JeanCMB14}
-develop an importance sampling strategy for estimating the exponent term in equation (4), thus leading to
-an approximation of the softmax computation. \newcite{NIPS2013_5165}
+develop an importance sampling strategy for approximating the softmax computation. \newcite{NIPS2013_5165}
 present a technique for approximation of target word probability using noise-contrastive estimation. Our method can
 be applied in conjunction with these techniques.
 
 Sequential or hierarchical encodings of large vocabularies have played an
-improtant role in recurrent neural network language models, primarily to
+important role in recurrent neural network language models, primarily to
 address the inference time issue of large vocabularies. \newcite{5947611}
 describe an architecture in which output word types are grouped into classes by
-frequency, and the network first predicts a class and then a word in that
+frequency: the network first predicts a class, then a word in that
 class. \newcite{journals/corr/abs-1301-3781} describe an encoding of the output
 vocabulary as a binary tree. To our knowledge, hierarchical encodings have not
 been applied to input vocabulary encoding for translation.
@@ -81,16 +80,15 @@ An encoding can be used to represent a sequence of tokens from a large
 vocabulary $\mathcal{V}$ using a small vocabulary $\mathcal{W}$.  In the case
 of translation, let $\mathcal{V}$ be the original corpus vocabulary, which can
 number in the millions of word types in a typical corpus. Let $\mathcal{W}$ be
-the limited vocabulary size of a neural translation model, which is typically
-set to a much smaller number such as 30,000. Let $V=|\mathcal{V}|$ and
-$W=|\mathcal{W}|$.
+the vocabulary size of a neural translation model, typically
+set to a much smaller number such as 30,000.
 
 A deterministically invertible, variable-length encoding maps each
 $v\in\mathcal{V}$ to a sequence $w \in \mathcal{W}+$ such that no other
 $v'\in\mathcal{V}$ is mapped to a prefix of $w$. Encoding simply replaces each
-element of $V$ with its encoding, and decoding is unambiguous because of this
+element of $\mathcal{V}$ according to the map, and decoding is unambiguous because of this
 prefix restriction. An encoding can be represented as a tree in which each leaf
-corresponds to an element of $V$, each node contains a symbol from
+corresponds to an element of $\mathcal{V}$, each node contains a symbol from
 $\mathcal{W}$, and the encoding of any leaf is its path from the root.
 
 A Huffman code is an optimal encoding that uses as few symbols from

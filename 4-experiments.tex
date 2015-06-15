@@ -6,10 +6,9 @@ We train on the English-French parallel corpora from ACL WMT '14, which contains
 WMT '14, which contains 3003 new sentences. As a comparison metric, we additionally run the system presented by
 \newcite{journals/corr/BahdanauCB14} using the same parameters and data. We ensure
 that after our data transformation is applied, the resulting vocabulary also has size
-30,000, matching the number used in their experiments. Taking inspiration from the standard Huffman encoding
-priority queue algorithm, we construct the trees by the following method. First, we use
+30,000, matching the number used in their experiments. We construct the trees by the following method. First, we use
 the formulas derived in the previous section to calculate the optimal number of
-common words $W$ for each encoding scheme, using $V$ to be the vocabulary size of the original text and $K = 30000$.
+common words $W$ for each encoding scheme, using $V$ to be the vocabulary size of the training corpus and $K = 30000$.
 We then find the $W$ words in the text with highest frequency and
 apply the identity transformation to them. For the remaining words, we encode them
 using a distinct symbol whose form matches the one prescribed for each
@@ -18,13 +17,13 @@ encoding scheme.
 We use the RNNsearch-50 architecture from \newcite{journals/corr/BahdanauCB14} as
 our black box machine translation system. We report results for this system alone,
 as well as for each of our three encoding schemes, using the BLEU score metric (\newcite{bleu}) for
-ease of comparison with previously reported scores. Our results after training
-for approximately 5 days are compiled in Table \ref{table:results} and \ref{table:precs}.
+comparison with previously reported scores. Our results after training
+for about 5 days are compiled in Tables \ref{table:results} and \ref{table:precs}.
 
-Our results indicate that the scheme which keeps the highest number of common words, Repeat-All,
+Our results indicate that the scheme which keeps the highest number of common words, \emph{Repeat-All},
 performs best. The precision values reveal that the common word translation accuracy does not change significantly
 among strategies, but the system learns translations for the rare words best when they are encoded
-using Repeat-All.
+using \emph{Repeat-All}.
 
 \begin{table}
   \centering
@@ -65,7 +64,6 @@ using Repeat-All.
       No-Repeats & 0.970 & 0.210\\
     \bottomrule
   \end{tabular}}
-  \caption{Precision on common words (CW) and rare words (RW) in the test set
-    for each encoding strategy.}
+  \caption{Test set precision on common words (CW) and rare words (RW) per encoding strategy.}
   \label{table:precs}
 \end{table}
