@@ -19,11 +19,7 @@ vocabulary size.
 Our approach considers a family of 3 different encoding schemes, all of which
 reduce the vocabulary size of the parallel corpora used to train and test the model,
 while still maintaining deterministic decoding. The encoding schemes are largely
-motivated by the Huffman code compression algorithm. In this common compression technique,
-the frequencies of each element in the text are calculated and used to construct a tree
-which maps an element to a prefix code (no code word can be the prefix of any other code
-word in the mapping). Since the generated mappings obey this prefix property, the
-encoding is invertible.
+motivated by the Huffman code compression algorithm (Section 2.3).
 
 Our method of encoding the source and target text before passing it through the
 neural machine translation system eliminates the need to replace every rare word with the
