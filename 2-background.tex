@@ -2,45 +2,49 @@
 \label{sec:background}
 
 \subsection{Neural Machine Translation}
-The conventional architecture for alignment-based neural machine translation, as proposed by \newcite{journals/corr/ChoMGBSB14},
-consists of an encoder and a decoder, both recurrent neural networks. The encoder receives
-a source text sentence $\mathbf{x}$ and outputs a fixed-length vector of hidden states:
-\begin{equation}
-h_{t} = f(x_{t}, h_{t-1})
-\end{equation},
-where $f$ is any non-linear activation function. The decoder then converts these hidden state vectors to
-target symbols $\mathbf{y}$ according to
-\begin{equation}
-P(y_{t} | y_{t-1}, ..., y_{1}, \mathbf{x}) = g(h_{t}, y_{t-1}, c)
-\end{equation},
-where $c$ is a \emph{summary} of the entire input sequence and $g$ is another activation function.
-Naturally, the encoder and decoder parameters are jointly optimized to maximize the log likelihood:
-\begin{equation}
-\theta^{*} = \argmax_{\theta} \sum_{n=1}^{N}\log p(y_{n} | x_{n}, \theta)
-\end{equation}
+One recent approach to neural machine translation predicts both a translation
+and its alignment to the source sentence \newcite{journals/corr/ChoMGBSB14}.
 
-In \newcite{journals/corr/BahdanauCB14}, the authors propose a system to relieve the encoder of its need
-to convert each source sentence into a fixed-length hidden state vector. Toward this end, their approach builds an attention mechanism
-into the decoder, which is trained to determine on which portions of the source sentence to focus. The encoder
-is built as a bidirectional recurrent neural network, where the hidden state annotations $h_{t}$ for each source text word
-are the result of concatenating forward hidden states $\overrightarrow{h_{t}} = f(x_{t}, \overrightarrow{h_{t-1}})$ and backward hidden states
-$\overleftarrow{h_{t}} = f(x_{t}, \overleftarrow{h_{t+1}})$. The decoder computes $c_{t}$, the summarizing context vector,
-as a convex combination of the $h_{t}$, with coefficients equal to $a(h_{t}, z_{t-1})$ scaled between 0 and 1 using a softmax computation, where $a$ is a
-jointly trained feedforward neural network with one hidden layer. We may thus write
+The architecture consists of an encoder and a decoder. The encoder receives a
+source text sentence $\mathbf{x}$ and encodes each prefix using a recurrent
+network that combines embeddings $x_j$ for each word position $j$ in
+$\mathbf{x}$:
 \begin{equation}
-P(y_{t} | y_{t-1}, ..., y_{1}, \mathbf{x}) = \dfrac{exp\{\theta_{t}^{T} \phi(y_{t-1}, z_{t}, c_{t})\}}{\displaystyle\sum_{s:y_{s} \in V} exp\{\theta_{s}^{T} \phi(y_{t-1}, z_{t}, c_{t})\}}
-\end{equation}
-for the probability of the next target vocabulary word in the translation.\\
+\overrightarrow{h}_{j} = f(x_{j}, \overrightarrow{h}_{j-1})
+\end{equation},
+where $f$ is a non-linear function. Reverse encodings $\overleftarrow{h}_j$
+are computed similarly to represent suffixes of the sentence. These vector
+representations are stacked to form $h_j$, a representation of the sentence
+focused on position $j$.
 
-As detailed by \newcite{journals/corr/JeanCMB14}, the dependence of the complexity on vocabulary
-size stems from the computation of the normalization factor in equation (4). This leads
-to significant temporal and memory requirements that scale with increased vocabulary size: storage space and
-learning time are both increased. Our approach thus uses this neural machine
-translation system as a black box while transforming the text to have a fixed vocabulary size.
+The decoder predicts each target symbol $\mathbf{y_i}$ sequentially according
+to the distribution
+\begin{equation}
+P(y_{i} | y_{i-1}, ..., y_{1}, \mathbf{x}) = g(y_{i-1}, s_i, c_i)
+\label{eqn:normalize}
+\end{equation},
+where $s_i$ is a hidden decoder state, $c_i$ is a \emph{summary} of the entire
+input sequence, and $g$ is another non-linear function. Encoder and decoder
+parameters are jointly optimized to maximize the log likelihood of a training
+corpus.
+
+Depending on the approach to neural translation, $c$ can take multiple forms.
+\newcite{journals/corr/ChoMGBSB14} proposes integrating an attention mechanism
+in the decoder, which is trained to determine on which portions of the source
+sentence to focus. The decoder computes $c_{i}$, the summarizing context
+vector, as a convex combination of the $h_{j}$. The coefficients of this
+combination are proportional to an alignment model prediction $\exp a(h_j,
+s_i)$, where $a$ is a non-linear function.
+
+The speed of prediction scales with the output vocabulary size, due to the
+denominator of Equation~\ref{eqn:normalize} \cite{journals/corr/JeanCMB14}. The
+input vocabulary size is also a challenge for storage and learning. As aa
+result, neural machine translation systems only consider the top 30K to 100K
+most frequent words in a training corpus, replacing the other words with an
+\emph{unknown word} symbol.
 
 \subsection{Related Work}
-Typically, neural machine translation systems only consider the top 30K to 100K words in the text, replacing the other words
-with a filler symbol. There has been much recent work in improving translation quality with a large vocabulary size.
+There has been much recent work in improving translation quality with a large vocabulary size.
 \newcite{journals/corr/LuongSLVZ14} describe an approach
 that, similar to ours, treats the translation system as a black box. They eliminate unknown symbols by training the
 system to recognize from where in the source text each unknown word in the target text came, so that in a postprocessing
@@ -74,11 +78,12 @@ thus avoiding computation of the summation term over the entire vocabulary.
 \subsection{Huffman Codes}
 
 An encoding can be used to represent a sequence of tokens from a large
-vocabulary $\mathcal{V}$ using a small vocabulary $\mathcal{W}$. In the case of
-translation, let $\mathcal{V}$ be the original corpus vocabulary, which can
+vocabulary $\mathcal{V}$ using a small vocabulary $\mathcal{W}$.  In the case
+of translation, let $\mathcal{V}$ be the original corpus vocabulary, which can
 number in the millions of word types in a typical corpus. Let $\mathcal{W}$ be
 the limited vocabulary size of a neural translation model, which is typically
-set to a much smaller number such as 30,000.\\
+set to a much smaller number such as 30,000. Let $V=|\mathcal{V}|$ and
+$W=|\mathcal{W}|$.
 
 A deterministically invertible, variable-length encoding maps each
 $v\in\mathcal{V}$ to a sequence $w \in \mathcal{W}+$ such that no other
@@ -86,10 +91,10 @@ $v'\in\mathcal{V}$ is mapped to a prefix of $w$. Encoding simply replaces each
 element of $V$ with its encoding, and decoding is unambiguous because of this
 prefix restriction. An encoding can be represented as a tree in which each leaf
 corresponds to an element of $V$, each node contains a symbol from
-$\mathcal{W}$, and the encoding of any leaf is its path from the root.\\
+$\mathcal{W}$, and the encoding of any leaf is its path from the root.
 
 A Huffman code is an optimal encoding that uses as few symbols from
 $\mathcal{W}$ as possible to encode an original sequence of symbols from
 $\mathcal{V}$. Although binary codes are typical, $\mathcal{W}$ can have any
 size. An optimal encoding can be found using a greedy algorithm
-\cite{huffman}.\\
+\cite{huffman}.
