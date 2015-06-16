@@ -35,19 +35,21 @@ symbol introduced into $\mathcal{W}$ of the form \textbf{sX} for an integer X.
 
 \noindent\textbf{Repeat-Symbol.}
 The \emph{Repeat-Symbol} encoding scheme does not allow common-word symbols to
-appear in the encoding of rare words. Instead, all rare words are encoded as
-a two-symbol sequence of the form ``\textbf{sX sX},'' where X are integers that may be
-the same or different. This scheme decreases the number of common words in
-order to encode all rare words using a restricted set of symbols. In this scheme, a common word in the encoded vocabulary always corresponds to a common word
-in the original vocabulary.
+appear in the encoding of rare words. Instead, each rare word is encoded as a
+two-symbol sequence of the form ``\textbf{sX sY},'' where X and Y are integers
+that may be the same or different. This scheme decreases the number of common
+words in order to encode all rare words using a restricted set of symbols. In
+this scheme, a common word in the encoded vocabulary always corresponds to a
+common word in the original vocabulary, reducing ambiguity for common word
+symbols at the expense of increasing ambiguity of pseudo-word symbols.
 
 \noindent\textbf{No-Repeats.}
 Our final encoding scheme, \emph{No-Repeats}, uses a different vocabulary for
 the first and second symbols in each rare word. That is, rare words are
-represented as ``\textbf{sX tX},'' where X are integers that may be the same or
-different.  In this scheme, common words and rare words do not share symbols
-and each symbol can immediately be identified as common, the first of a rare encoding pair, or the
-second of a rare encoding pair.
+represented as ``\textbf{sX tY},'' where X and Y are integers that may be the
+same or different.  In this scheme, common words and rare words do not share
+symbols, and each symbol can immediately be identified as common, the first of
+a rare encoding pair, or the second of a rare encoding pair.
 
 \subsection{Symbol Counts}
 To maximize performance, it is critical to set the number of common words (which
