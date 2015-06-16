@@ -22,7 +22,7 @@ for about 5 days are compiled in Tables \ref{table:results} and \ref{table:precs
 
 Our results indicate that the scheme which keeps the highest number of common words, \emph{Repeat-All},
 performs best. The precision values (proportion of words in the test set translation that appear in the
-reference corpus) reveal that the common word translation accuracy does not change significantly
+reference corpus, per sentence) reveal that the common word translation accuracy does not change significantly
 among strategies, but the system learns translations for the rare words best when they are encoded
 using \emph{Repeat-All}.
 
@@ -56,13 +56,13 @@ using \emph{Repeat-All}.
     \toprule
       \textbf{Encoding} & \textbf{CW Precision} & \textbf{RW Precision}\\
     \midrule
-      None & 0.895 & N/A\\
+      None & 0.620 & N/A\\
     \midrule
-      Repeat-All & 0.970 & 0.332\\
+      Repeat-All & 0.658 & 0.280\\
     \midrule
-      Repeat-Symbol & 0.967 & 0.216\\
+      Repeat-Symbol & 0.655 & 0.165\\
     \midrule
-      No-Repeats & 0.970 & 0.210\\
+      No-Repeats & 0.636 & 0.132\\
     \bottomrule
   \end{tabular}}
   \caption{Test set precision on common words (CW) and rare words (RW) per encoding strategy.}
