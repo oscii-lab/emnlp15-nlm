@@ -2,27 +2,31 @@
 \label{sec:background}
 
 \subsection{Neural Machine Translation}
-One recent approach to neural machine translation by \newcite{journals/corr/ChoMGBSB14} predicts both a translation
-and its alignment to the source sentence.
+Neural machine translation describes approaches to machine translation that
+learn from corpora in a single integrated model that embeds words and sentences
+into a vector space
+\newcite{Kalchbrenner13,journals/corr/ChoMGBSB14,Sutskever14}. We focus on one
+recent approach to neural machine translation predicts both a translation and
+its alignment to the source sentence \newcite{journals/corr/BahdanauCB14},
+though our technique is relevant to related approaches as well.
 
 The architecture consists of an encoder and a decoder. The encoder receives a
-source text sentence $\mathbf{x}$ and encodes each prefix using a recurrent
-network that combines embeddings $x_j$ for each word position $j$ in
-$\mathbf{x}$:
+source sentence $\mathbf{x}$ and encodes each prefix using a recurrent neural
+network that recursively combines embeddings $x_j$ for each word position $j$:
 \begin{equation}
 \overrightarrow{h}_{j} = f(x_{j}, \overrightarrow{h}_{j-1})
-\end{equation},
-where $f$ is a non-linear function. Reverse encodings $\overleftarrow{h}_j$
-are computed similarly to represent suffixes of the sentence. These vector
-representations are stacked to form $h_j$, a representation of the sentence
-focused on position $j$.
+\end{equation}
+where $f$ is a non-linear function. Reverse encodings $\overleftarrow{h}_j$ are
+computed similarly to represent suffixes of the sentence. These vector
+representations are stacked to form $h_j$, a representation of the whole
+sentence focused on position $j$.
 
 The decoder predicts each target symbol $\mathbf{y_i}$ sequentially according
 to the distribution
 \begin{equation}
 P(y_{i} | y_{i-1}, ..., y_{1}, \mathbf{x}) = g(y_{i-1}, s_i, c_i)
 \label{eqn:normalize}
-\end{equation},
+\end{equation}
 where $s_i$ is a hidden decoder state, $c_i$ is a \emph{summary} of the entire
 input sequence, and $g$ is another non-linear function. Encoder and decoder
 parameters are jointly optimized to maximize the log likelihood of a training
@@ -44,19 +48,23 @@ most frequent words in a training corpus, replacing the other words with an
 \emph{unknown word} symbol.
 
 \subsection{Related Work}
-There has been much recent work in improving translation quality with a large vocabulary size.
-\newcite{journals/corr/LuongSLVZ14} describe an approach
-that, similar to ours, treats the translation system as a black box. They eliminate unknown symbols by training the
-system to recognize from where in the source text each unknown word in the target text came, so that in a postprocessing
- phase, the unknown word can be replaced by a dictionary lookup of the corresponding source text word. In contrast,
-our method does not rely on access to a complete dictionary, and instead transforms the data to allow the system itself to
-learn translations for even the rare words.
+There has been much recent work in improving translation quality with a large
+vocabulary size. \newcite{journals/corr/LuongSLVZ14} describe an approach that,
+similar to ours, treats the translation system as a black box. They eliminate
+unknown symbols by training the system to recognize from where in the source
+text each unknown word in the target text came, so that in a postprocessing
+phase, the unknown word can be replaced by a dictionary lookup of the
+corresponding source word. In contrast, our method does not rely on access to a
+complete dictionary, and instead transforms the data to allow the system itself
+to learn translations for even the rare words.
 
-Some approaches have altered the model itself to circumvent the expensive normalization computation, rather than
-applying preprocessing and postprocessing on the text. \newcite{journals/corr/JeanCMB14}
-develop an importance sampling strategy for approximating the softmax computation. \newcite{NIPS2013_5165}
-present a technique for approximation of target word probability using noise-contrastive estimation. Our method can
-be applied in conjunction with these techniques.
+Some approaches have altered the model to circumvent the expensive
+normalization computation, rather than applying preprocessing and
+postprocessing on the text. \newcite{journals/corr/JeanCMB14} develop an
+importance sampling strategy for approximating the softmax computation.
+\newcite{NIPS2013_5165} present a technique for approximation of the target
+word probability using noise-contrastive estimation. Our method can be applied
+in conjunction with these techniques.
 
 Sequential or hierarchical encodings of large vocabularies have played an
 important role in recurrent neural network language models, primarily to
@@ -67,11 +75,11 @@ class. \newcite{journals/corr/abs-1301-3781} describe an encoding of the output
 vocabulary as a binary tree. To our knowledge, hierarchical encodings have not
 been applied to input vocabulary encoding for translation.
 
-Other methods have been also developed to work around large-vocabulary issues in
-language modeling. \newcite{Morin05hierarchicalprobabilistic}, \newcite{NIPS2008_3583},
-and \newcite{strategies} develop hierarchical versions of
-the softmax computation; \newcite{Huang:2012:IWR:2390524.2390645}
-and \newcite{Collobert:2008:UAN:1390156.1390177} remove the need for normalization,
+Other methods have also been developed to work around large-vocabulary issues
+in language modeling. \newcite{Morin05hierarchicalprobabilistic},
+\newcite{NIPS2008_3583}, and \newcite{strategies} develop hierarchical versions
+of the softmax computation; \newcite{Huang:2012:IWR:2390524.2390645} and
+\newcite{Collobert:2008:UAN:1390156.1390177} remove the need for normalization,
 thus avoiding computation of the summation term over the entire vocabulary.
 
 \subsection{Huffman Codes}
