@@ -1,15 +1,12 @@
 \section{Conclusion and Future Work}
 \label{sec:conclusion}
 
-Recurrent neural network-based deep learning approaches
-to machine translation have performed well on a limited vocabulary
-size. We developed a novel approach for compressing
-the source and target text based on Huffman coding schemes,
-eliminating the use of the \emph{unknown word} symbol.
-An important continuation of our work would be to develop heuristics for effectively
-grouping ``similar'' words in the source and target text, so that they tend to have
-encodings that share a symbol. We evaluated performance on the English-French
-parallel corpora from ACL WMT '14 and compared it with that of the architecture
-proposed by \newcite{journals/corr/BahdanauCB14}, using the BLEU score metric.
-We found that our system improved the BLEU score by up to 6.52\% (1.7 points); its simplicity
-allows it to be used as a preprocessing step for other techniques.
+We describe a novel approach for encoding the source and target text based on
+Huffman coding schemes, eliminating the use of the \emph{unknown word} symbol.
+An important continuation of our work would be to develop heuristics for
+effectively grouping ``similar'' words in the source and target text, so that
+they tend to have encodings that share a symbol. Even with our naive grouping
+by corpus frequency, our approach offers a simple way to predict both common
+and rare words in a neural translation model. As a result, performance improves
+by up to 1.7 BLEU. We expect that the simplicity of our technique will allow
+for straightforward combination with other enhancements and neural models.
