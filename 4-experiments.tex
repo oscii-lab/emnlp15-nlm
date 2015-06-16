@@ -35,17 +35,17 @@ pseudo-words and common words gives substantially higher rare word accuracy.
     \toprule
       \textbf{Encoding} & \textbf{BLEU} & \textbf{\# Common Words}\\
     \midrule
-      None & 0.2577 & 30000\\
+      None & 25.77 & 30,000\\
     \midrule
-      Repeat-All & 0.2745 & 29940\\
+      Repeat-All & 27.45 & 29,940\\
     \midrule
-      Repeat-Symbol & 0.2652 & 28860\\
+      Repeat-Symbol & 26.52 & 28,860\\
     \midrule
-      No-Repeats & 0.2579 & 27320\\
+      No-Repeats & 25.79 & 27,320\\
     \bottomrule
   \end{tabular}}
-  \caption{BLEU scores on detokenized test set for various encoding
-    schemes after training for 5 days.}
+  \caption{BLEU scores (\%) on detokenized test set for each encoding
+    scheme after training for 5 days.}
   \label{table:results}
 \end{table}
 
@@ -55,17 +55,17 @@ pseudo-words and common words gives substantially higher rare word accuracy.
   \tabcolsep=0.11cm{
   \begin{tabular}{cccc}
     \toprule
-      \textbf{Encoding} & \textbf{CW Precision} & \textbf{RW Precision}\\
+      \textbf{Encoding} & \textbf{Common} & \textbf{Rare}\\
     \midrule
-      None & 0.620 & N/A\\
+      None & 62.0 & 0.0 \\
     \midrule
-      Repeat-All & 0.658 & 0.280\\
+      Repeat-All & 65.8 & 28.0 \\
     \midrule
-      Repeat-Symbol & 0.655 & 0.165\\
+      Repeat-Symbol & 65.5 & 16.5 \\
     \midrule
-      No-Repeats & 0.636 & 0.132\\
+      No-Repeats & 63.6 & 13.2 \\
     \bottomrule
   \end{tabular}}
-  \caption{Test set precision on common words (CW) and rare words (RW) per encoding strategy.}
+  \caption{Test set precision (\%) on common words and rare words for each encoding strategy.}
   \label{table:precs}
 \end{table}
