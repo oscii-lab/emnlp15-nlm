@@ -13,7 +13,8 @@ $W$ for each encoding scheme, using $V$ to be the true vocabulary size of the
 training corpus and $W = 30,000$. We then find the $C$ most common words in the
 text and encode them as themselves. For the remaining rare words, we encode
 them using a distinct symbol whose form matches the one prescribed for each
-encoding scheme. Rare words are binned by frequency into branches.
+encoding scheme. Rare words are binned by frequency into branches. This encoding is
+applied separately to both the source text and the target text.
 
 We use the RNNsearch-50 architecture from \newcite{journals/corr/BahdanauCB14}
 as our machine translation system. We report results for this system alone, as

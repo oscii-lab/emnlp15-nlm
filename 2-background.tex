@@ -5,10 +5,10 @@
 Neural machine translation describes approaches to machine translation that
 learn from corpora in a single integrated model that embeds words and sentences
 into a vector space
-\newcite{kalchbrenner13emnlp,journals/corr/ChoMGBSB14,journals/corr/SutskeverVL14}.
-We focus on one recent approach to neural machine translation predicts
-both a translation and its alignment to the source sentence
-\newcite{journals/corr/BahdanauCB14}, though our technique is relevant to
+[\newcite{kalchbrenner13emnlp}, \newcite{journals/corr/ChoMGBSB14}, \newcite{journals/corr/SutskeverVL14}].
+We focus on one recent approach to neural machine translation, proposed
+by \newcite{journals/corr/BahdanauCB14}, that predicts
+both a translation and its alignment to the source sentence, though our technique is relevant to
 related approaches as well.
 
 The architecture consists of an encoder and a decoder. The encoder receives a
@@ -43,7 +43,7 @@ s_i)$, where $a$ is a non-linear function.
 
 The speed of prediction scales with the output vocabulary size, due to the
 denominator of Equation~\ref{eqn:normalize} \cite{journals/corr/JeanCMB14}. The
-input vocabulary size is also a challenge for storage and learning. As aa
+input vocabulary size is also a challenge for storage and learning. As a
 result, neural machine translation systems only consider the top 30K to 100K
 most frequent words in a training corpus, replacing the other words with an
 \emph{unknown word} symbol.
