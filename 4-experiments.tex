@@ -13,8 +13,9 @@ $W$ for each encoding scheme, using $V$ to be the true vocabulary size of the
 training corpus and $W = 30,000$. We then find the $C$ most common words in the
 text and encode them as themselves. For the remaining rare words, we encode
 them using a distinct symbol whose form matches the one prescribed for each
-encoding scheme. This encoding scheme is applied separately to both the source
-text and the target text.
+encoding scheme. The encoding is then applied separately to both the source
+text and the target text. Our encoding schemes all increase the number of
+tokens in the training corpus by approximately 4\%.
 
 To construct the mapping from rare words to their 2-word encodings, we bin rare
 words by frequency into branches. Thus, rare words of similar frequency in the
