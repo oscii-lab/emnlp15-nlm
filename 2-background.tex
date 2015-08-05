@@ -28,9 +28,10 @@ to the distribution
 P(y_{i} | y_{i-1}, ..., y_{1}, \mathbf{x}) = g(y_{i-1}, s_i, c_i)
 \label{eqn:normalize}
 \end{equation}
-where $s_i$ is a hidden decoder state, $c_i$ is a \emph{summary} of the entire
+where $s_i$ is a hidden decoder state summarizing the prefix of the translation
+generated so far, $c_i$ is a summary of the entire
 input sequence, and $g$ is another non-linear function. Encoder and decoder
-parameters are jointly optimized to maximize the log likelihood of a training
+parameters are jointly optimized to maximize the log-likelihood of a training
 corpus.
 
 Depending on the approach to neural translation, $c$ can take multiple forms.

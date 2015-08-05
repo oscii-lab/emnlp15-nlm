@@ -1,7 +1,7 @@
 \section{Experimental Results}
 \label{sec:exp}
 
-We train the public implementation of the system descrbed in
+We train the public implementation of the system described in
 \newcite{journals/corr/BahdanauCB14} on the English-French parallel corpora
 from ACL WMT '14, which contains 348M tokens. We evaluate on news-test-2014,
 also from WMT '14, which contains 3003 sentences. All experiments use the same
@@ -13,20 +13,34 @@ $W$ for each encoding scheme, using $V$ to be the true vocabulary size of the
 training corpus and $W = 30,000$. We then find the $C$ most common words in the
 text and encode them as themselves. For the remaining rare words, we encode
 them using a distinct symbol whose form matches the one prescribed for each
-encoding scheme. Rare words are binned by frequency into branches. This encoding is
-applied separately to both the source text and the target text.
+encoding scheme. This encoding scheme is applied separately to both the source
+text and the target text.
+
+To construct the mapping from rare words to their 2-word encodings, we bin rare
+words by frequency into branches. Thus, rare words of similar frequency in the
+training corpus tend to have encodings with the same first symbol. Similarly, the
+standard Huffman construction algorithm groups together rare words with similar
+frequencies within subtrees. More intelligent heuristics for constructing trees,
+such as using translation statistics instead of training corpus frequency, will be
+an interesting area of future work.
 
 We use the RNNsearch-50 architecture from \newcite{journals/corr/BahdanauCB14}
 as our machine translation system. We report results for this system alone, as
 well as for each of our three encoding schemes, using the BLEU metric
-\cite{bleu}. Our results after training each variant for 5 days appear in
+\cite{bleu}. Our results after training each variant for 5 days, corresponding to
+roughly 2 passes through the 180K-sentence training corpus, appear in
 Table~\ref{table:results}.
 
 Our results indicate that the scheme that keeps the highest number of common
 words, \emph{Repeat-All}, performs best. Table~\ref{table:precs} shows the
 unigram precision of each output. The common word translation accuracy does not
-change substantially among strategies, but encoding rare words using both
+change significantly among strategies, but encoding rare words using both
 pseudo-words and common words gives substantially higher rare word accuracy.
+
+It is possible for the model to predict an invalid encoded sequence that does
+not correspond to anything in the original vocabulary. However, in our experiments,
+we did not observe any invalid sequences in the decoding of the test set. A reasonable
+way to deal with invalid sequences would be to drop them from the output during decoding.
 
 \begin{table}
   \centering

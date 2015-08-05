@@ -77,11 +77,11 @@ $$V - C \leq (W - C) \cdot W$$
 Out of the $V - C$ rare words, we would like to pack them into a complete tree
 so that they may be encoded using our remaining $W - C$ symbols. Therefore, we
 maximize $C$ satisfying the constraint that
-$$\sqrt{V - C} \leq W - C$$
+$$V - C \leq (W - C)^{2}$$
 
 \noindent\textbf{No-Repeats.}
 Again, we desire to pack $V - C$ rare words into a complete tree where we may
-use $V - C$ symbols. To maximize $C$, we let $S = T$. Because $S + T + C = W$,
+use $W - C$ symbols. To maximize $C$, we let $S = T$. Because $S + T + C = W$,
 we have that $2S + C = W$. Therefore, we maximize $C$ satisfying the constraint
 that
-$$\sqrt{V - C} \leq \frac{W - C}{2}$$
+$$V - C \leq (\frac{W - C}{2})^{2}$$
