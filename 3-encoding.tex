@@ -24,7 +24,7 @@ consider are designed to prevent specific forms of symbol sharing across encodin
 
 \noindent\textbf{Repeat-All.}
 The first scheme is a standard Huffman code. In our experiments with
-$V\approx2\cdot10^6$ and $W=3\cdot10^4$ and frequencies drawn from the WMT
+$V\approx2\cdot10^6$, $W=3\cdot10^4$, and frequencies drawn from the WMT
 corpus, all words in $\mathcal{V}$ are encoded as either a single symbol or two
 symbols of $\mathcal{W}$. We denote the single-symbol words (which have the
 highest frequency) as \emph{common}, and we call the other words \emph{rare}.
@@ -40,7 +40,7 @@ two-symbol sequence of the form ``\textbf{sX sY},'' where X and Y are integers
 that may be the same or different. This scheme decreases the number of common
 words in order to encode all rare words using a restricted set of symbols. In
 this scheme, a common word in the encoded vocabulary always corresponds to a
-common word in the original vocabulary, reducing ambiguity for common word
+common word in the original vocabulary, reducing ambiguity of common word
 symbols at the expense of increasing ambiguity of pseudo-word symbols.
 
 \noindent\textbf{No-Repeats.}

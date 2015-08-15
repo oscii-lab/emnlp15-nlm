@@ -10,7 +10,7 @@ experiments used the same learning parameters and vocabulary size of 30,000.
 
 We constructed each encoding by the following method. First, we used the
 formulas derived in the previous section to calculate the optimal number of
-common words $W$ for each encoding scheme, using $V$ to be the true vocabulary
+common words $C$ for each encoding scheme, using $V$ to be the true vocabulary
 size of the training corpus and $W = 30,000$. We then found the $C$ most common
 words in the text and encoded them as themselves. For the remaining rare words,
 we encoded them using a distinct symbol whose form matched the one prescribed
@@ -59,7 +59,7 @@ each variant for 5 days, corresponding to roughly 2 passes through the
 
 Alternative techniques that leverage bilingual resources have been shown to
 provide larger improvements. \newcite{journals/corr/JeanCMB14} demonstrate an
-improvement of 3.1 BLEU by using bilingual word cooccurrence statistics in an
+improvement of 3.1 BLEU by using bilingual word co-occurrence statistics in an
 aligned corpus to replace \emph{unknown word} tokens.
 \newcite{journals/corr/LuongSLVZ14} demonstrate an improvement of up to 2.8
 BLEU over a series of stronger baselines using an unknown word model that
@@ -105,8 +105,8 @@ require over 1,000. The fact that \emph{Repeat-All} has a constrained set of
 rare word first symbols may account for its higher rare word precision.
 
 It is possible for the model to predict an invalid encoded sequence that does
-not correspond to anything in the original vocabulary. However, in our
-experiments, we did not observe any invalid sequences in the decoding of the
+not correspond to any word in the original vocabulary. However, in our
+experiments, we did not observe any such sequences in the decoding of the
 test set. A reasonable way to deal with invalid sequences would be to drop them
 from the output during decoding.
 
