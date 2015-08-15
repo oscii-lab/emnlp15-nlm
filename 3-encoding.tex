@@ -27,9 +27,9 @@ The first scheme is a standard Huffman code. In our experiments with
 $V\approx2\cdot10^6$ and $W=3\cdot10^4$ and frequencies drawn from the WMT
 corpus, all words in $\mathcal{V}$ are encoded as either a single symbol or two
 symbols of $\mathcal{W}$. We denote the single-symbol words (which have the
-highest frequency) as ``common,'' and we call the other words ``rare.'' The
-\emph{Repeat-All} encoding scheme has the highest number of common words. In
-Figure~\ref{fig:examples}, common words are represented as themselves. Rare
+highest frequency) as \emph{common}, and we call the other words \emph{rare}.
+The \emph{Repeat-All} encoding scheme has the highest number of common words.
+In Figure~\ref{fig:examples}, common words are represented as themselves. Rare
 words are represented by two words, and the first is always a pseudo-word
 symbol introduced into $\mathcal{W}$ of the form \textbf{sX} for an integer X.
 
@@ -84,4 +84,4 @@ Again, we desire to pack $V - C$ rare words into a complete tree where we may
 use $W - C$ symbols. To maximize $C$, we let $S = T$. Because $S + T + C = W$,
 we have that $2S + C = W$. Therefore, we maximize $C$ satisfying the constraint
 that
-$$V - C \leq (\frac{W - C}{2})^{2}$$
+$$V - C \leq \left(\frac{W - C}{2}\right)^{2}$$

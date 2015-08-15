@@ -1,36 +1,86 @@
 \section{Experimental Results}
 \label{sec:exp}
 
-We train the public implementation of the system described in
-\newcite{journals/corr/BahdanauCB14} on the English-French parallel corpora
-from ACL WMT '14, which contains 348M tokens. We evaluate on news-test-2014,
-also from WMT '14, which contains 3003 sentences. All experiments use the same
-learning parameters and vocabulary size of 30,000.
+We trained a public
+implementation\footnote{\url{github.com/lisa-groundhog/GroundHog}} of the
+system described in \newcite{journals/corr/BahdanauCB14} on the English-French
+parallel corpus from ACL WMT 2014, which contains 348M tokens. We evaluated on
+news-test-2014, also from WMT 2014, which contains 3003 sentences. All
+experiments used the same learning parameters and vocabulary size of 30,000.
 
-We construct each encoding by the following method. First, we use the formulas
-derived in the previous section to calculate the optimal number of common words
-$W$ for each encoding scheme, using $V$ to be the true vocabulary size of the
-training corpus and $W = 30,000$. We then find the $C$ most common words in the
-text and encode them as themselves. For the remaining rare words, we encode
-them using a distinct symbol whose form matches the one prescribed for each
-encoding scheme. The encoding is then applied separately to both the source
-text and the target text. Our encoding schemes all increase the number of
-tokens in the training corpus by approximately 4\%.
+We constructed each encoding by the following method. First, we used the
+formulas derived in the previous section to calculate the optimal number of
+common words $W$ for each encoding scheme, using $V$ to be the true vocabulary
+size of the training corpus and $W = 30,000$. We then found the $C$ most common
+words in the text and encoded them as themselves. For the remaining rare words,
+we encoded them using a distinct symbol whose form matched the one prescribed
+for each encoding scheme. The encoding was then applied separately to both the
+source text and the target text. Our encoding schemes all increased the total
+number of tokens in the training corpus by approximately 4\%.
 
-To construct the mapping from rare words to their 2-word encodings, we bin rare
+To construct the mapping from rare words to their 2-word encodings, we binned rare
 words by frequency into branches. Thus, rare words of similar frequency in the
-training corpus tend to have encodings with the same first symbol. Similarly, the
-standard Huffman construction algorithm groups together rare words with similar
-frequencies within subtrees. More intelligent heuristics for constructing trees,
-such as using translation statistics instead of training corpus frequency, will be
-an interesting area of future work.
+training corpus tended to have encodings with the same first symbol. Similarly,
+the standard Huffman construction algorithm groups together rare words with
+similar frequencies within subtrees. More intelligent heuristics for
+constructing trees, such as using translation statistics instead of training
+corpus frequency, would be an interesting area of future work.
 
-We use the RNNsearch-50 architecture from \newcite{journals/corr/BahdanauCB14}
+\subsection{Results}
+
+\begin{table}
+  \centering
+  \vspace{8pt}
+  \tabcolsep=0.11cm{
+  \begin{tabular}{|l|l|l|l|}
+    \hline
+      \textbf{Encoding} & \textbf{BLEU} & \textbf{\# Common Words}\\
+    \hline
+      None & 25.77 & 30,000\\
+    \hline
+      Repeat-All & 27.45 & 29,940\\
+    \hline
+      Repeat-Symbol & 26.52 & 28,860\\
+    \hline
+      No-Repeats & 25.79 & 27,320\\
+    \hline
+  \end{tabular}}
+  \caption{BLEU scores (\%) on detokenized test set for each encoding
+    scheme after training for 5 days.}
+  \label{table:results}
+\end{table}
+
+We used the RNNsearch-50 architecture from \newcite{journals/corr/BahdanauCB14}
 as our machine translation system. We report results for this system alone, as
 well as for each of our three encoding schemes, using the BLEU metric
-\cite{bleu}. Our results after training each variant for 5 days, corresponding to
-roughly 2 passes through the 180K-sentence training corpus, appear in
-Table~\ref{table:results}.
+\cite{bleu}. Table~\ref{table:results} summarizes our results after training
+each variant for 5 days, corresponding to roughly 2 passes through the
+180K-sentence training corpus.
+
+% TODO Compare with literature
+
+\subsection{Analysis}
+
+\begin{table}
+  \centering
+  \vspace{8pt}
+  \tabcolsep=0.11cm{
+  \begin{tabular}{|l|l|l|l|}
+    \hline
+      \textbf{Encoding} & \textbf{Common} & \textbf{Rare} & \textbf{1st Symbol}\\
+    \hline
+      None & 62.0 & 0.0 & -\\
+    \hline
+      Repeat-All & 65.8 & 28.0 & 64.8 \\
+    \hline
+      Repeat-Symbol & 65.5 & 16.5 & 24.8 \\
+    \hline
+      No-Repeats & 63.6 & 15.8 & 25.7 \\
+    \hline
+  \end{tabular}}
+  \caption{Test set precision (\%) on common words and rare words for each encoding strategy.}
+  \label{table:precs}
+\end{table}
 
 Our results indicate that the scheme that keeps the highest number of common
 words, \emph{Repeat-All}, performs best. Table~\ref{table:precs} shows the
@@ -43,45 +93,3 @@ not correspond to anything in the original vocabulary. However, in our experimen
 we did not observe any invalid sequences in the decoding of the test set. A reasonable
 way to deal with invalid sequences would be to drop them from the output during decoding.
 
-\begin{table}
-  \centering
-  \vspace{8pt}
-  \tabcolsep=0.11cm{
-  \begin{tabular}{cccc}
-    \toprule
-      \textbf{Encoding} & \textbf{BLEU} & \textbf{\# Common Words}\\
-    \midrule
-      None & 25.77 & 30,000\\
-    \midrule
-      Repeat-All & 27.45 & 29,940\\
-    \midrule
-      Repeat-Symbol & 26.52 & 28,860\\
-    \midrule
-      No-Repeats & 25.79 & 27,320\\
-    \bottomrule
-  \end{tabular}}
-  \caption{BLEU scores (\%) on detokenized test set for each encoding
-    scheme after training for 5 days.}
-  \label{table:results}
-\end{table}
-
-\begin{table}
-  \centering
-  \vspace{8pt}
-  \tabcolsep=0.11cm{
-  \begin{tabular}{cccc}
-    \toprule
-      \textbf{Encoding} & \textbf{Common} & \textbf{Rare}\\
-    \midrule
-      None & 62.0 & 0.0 \\
-    \midrule
-      Repeat-All & 65.8 & 28.0 \\
-    \midrule
-      Repeat-Symbol & 65.5 & 16.5 \\
-    \midrule
-      No-Repeats & 63.6 & 15.8 \\
-    \bottomrule
-  \end{tabular}}
-  \caption{Test set precision (\%) on common words and rare words for each encoding strategy.}
-  \label{table:precs}
-\end{table}

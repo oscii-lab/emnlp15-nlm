@@ -2,10 +2,10 @@
 \label{sec:background}
 
 \subsection{Neural Machine Translation}
-Neural machine translation describes approaches to machine translation that
+\emph{Neural machine translation} describes approaches to machine translation that
 learn from corpora in a single integrated model that embeds words and sentences
 into a vector space
-[\newcite{kalchbrenner13emnlp}, \newcite{journals/corr/ChoMGBSB14}, \newcite{journals/corr/SutskeverVL14}].
+\cite{kalchbrenner13emnlp,journals/corr/ChoMGBSB14,journals/corr/SutskeverVL14}.
 We focus on one recent approach to neural machine translation, proposed
 by \newcite{journals/corr/BahdanauCB14}, that predicts
 both a translation and its alignment to the source sentence, though our technique is relevant to
@@ -22,7 +22,7 @@ computed similarly to represent suffixes of the sentence. These vector
 representations are stacked to form $h_j$, a representation of the whole
 sentence focused on position $j$.
 
-The decoder predicts each target symbol $\mathbf{y_i}$ sequentially according
+The decoder predicts each target word $y_i$ sequentially according
 to the distribution
 \begin{equation}
 P(y_{i} | y_{i-1}, ..., y_{1}, \mathbf{x}) = g(y_{i-1}, s_i, c_i)
@@ -50,15 +50,16 @@ most frequent words in a training corpus, replacing the other words with an
 \emph{unknown word} symbol.
 
 \subsection{Related Work}
-There has been much recent work in improving translation quality with a large
-vocabulary size. \newcite{journals/corr/LuongSLVZ14} describe an approach that,
-similar to ours, treats the translation system as a black box. They eliminate
-unknown symbols by training the system to recognize from where in the source
-text each unknown word in the target text came, so that in a postprocessing
-phase, the unknown word can be replaced by a dictionary lookup of the
-corresponding source word. In contrast, our method does not rely on access to a
-complete dictionary, and instead transforms the data to allow the system itself
-to learn translations for even the rare words.
+
+There has been much recent work in improving translation quality by addressing
+these vocabulary size challenges. \newcite{journals/corr/LuongSLVZ14} describe
+an approach that, similar to ours, treats the translation system as a black
+box. They eliminate unknown symbols by training the system to recognize from
+where in the source text each unknown word in the target text came, so that in
+a postprocessing phase, the unknown word can be replaced by a dictionary lookup
+of the corresponding source word. In contrast, our method does not rely on
+access to a complete dictionary, and instead transforms the data to allow the
+system itself to learn translations for even the rare words.
 
 Some approaches have altered the model to circumvent the expensive
 normalization computation, rather than applying preprocessing and
@@ -75,7 +76,7 @@ describe an architecture in which output word types are grouped into classes by
 frequency: the network first predicts a class, then a word in that
 class. \newcite{journals/corr/abs-1301-3781} describe an encoding of the output
 vocabulary as a binary tree. To our knowledge, hierarchical encodings have not
-been applied to input vocabulary encoding for translation.
+been applied to the input vocabulary of a machine translation system.
 
 Other methods have also been developed to work around large-vocabulary issues
 in language modeling. \newcite{Morin05hierarchicalprobabilistic},
