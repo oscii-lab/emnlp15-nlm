@@ -57,7 +57,13 @@ well as for each of our three encoding schemes, using the BLEU metric
 each variant for 5 days, corresponding to roughly 2 passes through the
 180K-sentence training corpus.
 
-% TODO Compare with literature
+Alternative techniques that leverage bilingual resources have been shown to
+provide larger improvements. \newcite{journals/corr/JeanCMB14} demonstrate an
+improvement of 3.1 BLEU by using bilingual word cooccurrence statistics in an
+aligned corpus to replace \emph{unknown word} tokens.
+\newcite{journals/corr/LuongSLVZ14} demonstrate an improvement of up to 2.8
+BLEU over a series of stronger baselines using an unknown word model that
+also makes predictions using a bilingual dictionary.
 
 \subsection{Analysis}
 
@@ -78,18 +84,29 @@ each variant for 5 days, corresponding to roughly 2 passes through the
       No-Repeats & 63.6 & 15.8 & 25.7 \\
     \hline
   \end{tabular}}
-  \caption{Test set precision (\%) on common words and rare words for each encoding strategy.}
+  \caption{Test set precision (\%) on common words and rare words for each
+  encoding strategy. \emph{1st Symbol} denotes the precision of the first
+  pseudo-word symbol in an encoded rare word.}
   \label{table:precs}
 \end{table}
 
-Our results indicate that the scheme that keeps the highest number of common
-words, \emph{Repeat-All}, performs best. Table~\ref{table:precs} shows the
-unigram precision of each output. The common word translation accuracy does not
-change significantly among strategies, but encoding rare words using both
-pseudo-words and common words gives substantially higher rare word accuracy.
+Our results indicate that the encoding scheme that keeps the highest number of
+common words, \emph{Repeat-All}, performs best. Table~\ref{table:precs} shows
+the unigram precision of each output. The common word translation accuracy is
+higher for all encoding schemes than for the baseline, although all precisions
+are similar. Larger differences appear in the precision of rare words. The
+scheme that encodes rare words using both pseudo-words and common words gives
+substantially higher rare word accuracy than any other approach.
+
+The final column of Table~\ref{table:precs} shows the unigram precision of the
+first pseudo-word in an encoded rare word. The \emph{Repeat-All} scheme uses
+only 60 different first symbols to encode all rare words. The other schemes
+require over 1,000. The fact that \emph{Repeat-All} has a constrained set of
+rare word first symbols may account for its higher rare word precision.
 
 It is possible for the model to predict an invalid encoded sequence that does
-not correspond to anything in the original vocabulary. However, in our experiments,
-we did not observe any invalid sequences in the decoding of the test set. A reasonable
-way to deal with invalid sequences would be to drop them from the output during decoding.
+not correspond to anything in the original vocabulary. However, in our
+experiments, we did not observe any invalid sequences in the decoding of the
+test set. A reasonable way to deal with invalid sequences would be to drop them
+from the output during decoding.
 
